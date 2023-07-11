@@ -1,0 +1,14 @@
+public class Upload
+@Test
+public void uploadtest() {
+ System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver_win32/chromedriver.exe");
+        WebDriver driver = new ChromeDriver();
+        String url = "https://the-internet.herokuapp.com/upload";
+        driver.get(url);
+        driver.manage().window().maximize();
+        //click upload file
+        WebElement chooseFileButton = driver.findElement(By.id(//*[@id="file-upload"]));
+        choosefileButton.click();
+        choosefileButton.sendkeys("src/test/resources/upload.txt");
+        // select file
+}
