@@ -8,9 +8,19 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class Checkboxes {
-    @Test
+
+    public void waitFor(int ms){
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    @Test(priority =2, groups = {"regression","smoke"})
     public void checkboxTest(){
-        System.setProperty("webdriver.chrome.driver","src/main/resources/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver","src/main/resources/chromedriver_win32/chromedriver.exe");
         WebDriver driver = new ChromeDriver();
         String url = "https://the-internet.herokuapp.com/checkboxes";
         driver.get(url);
@@ -18,6 +28,7 @@ public class Checkboxes {
 
         WebElement checkbox1 = driver.findElement(By.xpath("//*[@id=\"checkboxes\"]/input[1]"));
         checkbox1.click();
+        waitFor(1000);
         Assert.assertTrue(checkbox1.isSelected());
 
         WebElement checkbox2 = driver.findElement(By.xpath("//*[@id=\"checkboxes\"]/input[2]"));
@@ -26,6 +37,31 @@ public class Checkboxes {
         }
         Assert.assertTrue(checkbox2.isSelected());
         driver.close();
-
     }
+
+    @Test(priority = 1, groups = {"regression"}, enabled=false)
+    public void uncheckCheckboxesTest(){
+        System.setProperty("webdriver.chrome.driver","src/main/resources/chromedriver.exe");
+        WebDriver driver = new ChromeDriver();
+        String url = "https://the-internet.herokuapp.com/checkboxes";
+        driver.get(url);
+        driver.manage().window().maximize();
+
+        WebElement checkbox1 = driver.findElement(By.xpath("//*[@id=\"checkboxes\"]/input[1]"));
+        if(checkbox1.isSelected()){
+            checkbox1.click();
+        }
+        //Assert.assertTrue(checkbox1.isSelected());
+
+        WebElement checkbox2 = driver.findElement(By.xpath("//*[@id=\"checkboxes\"]/input[2]"));
+        if(checkbox2.isSelected()){
+            checkbox2.click();
+        }
+        waitFor(1000);
+        Assert.assertFalse(checkbox1.isSelected()&&checkbox2.isSelected());
+        driver.close();
+    }
+
+
 }
+

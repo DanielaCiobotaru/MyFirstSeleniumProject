@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class Logout {
@@ -29,6 +30,9 @@ public class Logout {
         //click logout
         WebElement logoutButton = driver.findElement(By.xpath("//*[@id=\"content\"]/div/a"));
         logoutButton.click();
+        WebElement logoutMessage = driver.findElement(By.xpath("//*[@id=\"flash\"]"));
+        String text = "You logged out of the secure area!";
+        Assert.assertTrue(logoutMessage.getText().contains(text));
         //close page
     }
 }
